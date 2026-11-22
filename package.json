@@ -1,0 +1,8 @@
+{
+  "name": "enaks-auto-transportations",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Responsive ENAKS Auto and Transportations LLC website for Netlify",
+  "scripts": {"test": "node --test tests/*.test.cjs"},
+  "engines": {"node": ">=20"}
+}
