@@ -1,12 +1,12 @@
 # ENAKS Auto and Transportations LLC — website
 
-Eight-page static site + one Netlify Function. No framework, no build step for hosting: Netlify publishes `public/`.
+Seven-page static site + one Netlify Function, built from the owner's template. No framework, no build step for hosting: Netlify publishes `public/`.
 
 | | |
 |---|---|
-| Pages | Home, Services (all 11), Government and teaming, Capabilities, Funding and impact, About, Contact, Privacy |
+| Pages | Home, Services (all 11), Business and government, Funding and community, About, Contact, Privacy |
 | Form | `public/contact.html` → `POST /api/request` → `netlify/functions/request.mjs` → email via Resend |
-| Design | US highway guide-sign language: green sign hero with an exit-tab call to action, Overpass type (derived from Highway Gothic), amber only for status notes |
+| Design | "Route light": fog and navy, route-teal lines, an animated route drawn over the hero photo (pausable), transit-line services diagram, Unbounded + Lexend type |
 | Public contact | (404) 354-7930 · Eautotransport@mail.com |
 
 ## Edit and build
@@ -14,7 +14,7 @@ Edit `build.py` (pages and copy), `src/site.css`, `src/site.js`, then:
 ```bash
 python3 build.py                 # production -> public/
 python3 build.py --preview       # form validates but never sends (for review links)
-npm test                         # function + static checks (17 tests)
+npm test                         # function + static checks (18 tests)
 ```
 Commit `public/` together with the source change.
 
