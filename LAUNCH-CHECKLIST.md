@@ -8,7 +8,8 @@
 
 ## Blocks launch
 - [ ] **Business address** (owner is getting a commercial address). Needed for SAM.gov, Google Business Profile and LocalBusiness structured data. Not published until confirmed.
-- [ ] Domain name → `--site-url`, Netlify domain, Resend sender domain
+- [x] Domain: eautoandtransport.com (Namecheap; DNS on Namecheap hosting nameservers, mail MX on jellyfish.systems; keep MX, change only @ A and www)
+- [ ] Netlify site + custom domain + HTTPS; Resend sender domain
 - [ ] Resend account + the 3 Netlify environment variables, then one live test enquiry
 - [ ] Owner approves the wording on every page
 
