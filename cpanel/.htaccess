@@ -1,0 +1,24 @@
+# ENAKS site on Namecheap cPanel (Apache). Upload with the site files into public_html.
+Options -Indexes
+RewriteEngine On
+# Force HTTPS and the bare domain
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://eautoandtransport.com%{REQUEST_URI} [L,R=301]
+# Form endpoint (same URL as on Netlify)
+RewriteRule ^api/request/?$ api/request.php [L]
+# Clean URLs: /services -> services.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Strict-Transport-Security "max-age=31536000"
+</IfModule>
+<FilesMatch "\.(css|js|webp|svg)$">
+  <IfModule mod_headers.c>Header set Cache-Control "public, max-age=604800"</IfModule>
+</FilesMatch>
+ErrorDocument 404 /index.html
