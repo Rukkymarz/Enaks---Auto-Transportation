@@ -26,3 +26,8 @@
 
 ## Vendor details (publish only when verified)
 SAM.gov UEI/CAGE, USDOT/MC numbers if applicable, insurance limits (general liability, commercial auto, workers' comp), MBE/WBE/WOSB/DBE status, final NAICS codes.
+
+## Hosting (2026-11-24)
+- Public site: GitHub Pages from branch `gh-pages` (contents of `public/` + CNAME), custom domain eautoandtransport.com. Rebuild: `python3 build.py --site-url https://eautoandtransport.com --api-url https://eautoandtransport.netlify.app/api/request`, then copy `public/` to `gh-pages`.
+- Form API: Netlify function at eautoandtransport.netlify.app/api/request (CORS allows the custom domain). Netlify could not attach the domain (held by an old Netlify DNS zone on another team).
+- DNS at Namecheap BasicDNS: 4 GitHub A records on @, www CNAME rukkymarz.github.io, TXT verified-for-netlify kept.

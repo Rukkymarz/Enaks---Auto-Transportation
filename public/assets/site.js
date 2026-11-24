@@ -101,7 +101,7 @@
     var b = form.querySelector('button[type="submit"]'), label = b.innerHTML; b.disabled = true; b.textContent = 'Sending';
     say('Sending your request.', 'info');
     var ctl = new AbortController(), t = setTimeout(function () { ctl.abort(); }, 12000);
-    fetch('/api/request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data), signal: ctl.signal })
+    fetch('https://eautoandtransport.netlify.app/api/request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data), signal: ctl.signal })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(j.message || 'The request did not send.'); }); })
       .then(function () { form.reset(); if (started) started.value = String(Date.now()); say('<strong>Request sent.</strong> We will call or email you to confirm the details. A request is not a booking until we both confirm.', 'ok'); })
       .catch(function (err) { say((err.name === 'AbortError' ? 'The connection timed out.' : err.message) + ' You can also call <a href="tel:+14043547930">(404) 354-7930</a>.', 'error'); })

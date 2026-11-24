@@ -9,7 +9,7 @@ Content comes from the owner's template (enaks_website_github_ready). Publish on
 """
 import argparse, html, json, os, re, shutil
 
-ap = argparse.ArgumentParser(); ap.add_argument('--site-url', default=''); ap.add_argument('--preview', action='store_true'); A = ap.parse_args()
+ap = argparse.ArgumentParser(); ap.add_argument('--site-url', default=''); ap.add_argument('--preview', action='store_true'); ap.add_argument('--api-url', default='/api/request'); A = ap.parse_args()
 SITE = A.site_url.rstrip('/')
 ROOT = os.path.dirname(os.path.abspath(__file__)); OUT = os.path.join(ROOT, 'public')
 LEGAL = 'ENAKS Auto and Transportations LLC'
@@ -332,7 +332,9 @@ pages['privacy.html'] = ('Privacy | ENAKS Auto and Transportations', 'How ENAKS 
 # ---------- write ----------
 if os.path.exists(OUT): shutil.rmtree(OUT)
 os.makedirs(os.path.join(OUT, 'assets'))
-for f in ('site.css', 'site.js'): shutil.copy(os.path.join(ROOT, 'src', f), os.path.join(OUT, 'assets', f))
+shutil.copy(os.path.join(ROOT, 'src', 'site.css'), os.path.join(OUT, 'assets', 'site.css'))
+with open(os.path.join(ROOT, 'src', 'site.js')) as fh: _js = fh.read().replace("fetch('/api/request'", "fetch(" + json.dumps(A.api_url).replace('"', "'"))
+with open(os.path.join(OUT, 'assets', 'site.js'), 'w') as fh: fh.write(_js)
 for f in ('hero-transport.webp', 'hero-transport-small.webp'): shutil.copy(os.path.join(ROOT, 'src', 'img', f), os.path.join(OUT, 'assets', f))
 with open(os.path.join(OUT, 'assets', 'favicon.svg'), 'w') as fh:
     fh.write('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#0b1f33"/><path d="M8 23c4 0 4-6 8-6s4-6 8-6" fill="none" stroke="#14b8a6" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="11" r="3" fill="#ffb23f"/></svg>')

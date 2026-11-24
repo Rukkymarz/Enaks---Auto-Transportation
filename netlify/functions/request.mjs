@@ -14,9 +14,15 @@ const emailOk=value=>value.length<=150&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
 // Same rule as the client: no patient or health details in a general enquiry.
 const PHI=/\b(diagnos\w*|medicaid (id|number)|member id|insurance id|policy number|dob|date of birth|patient name|medical record|mrn)\b/i;
 const INQUIRY=new Set(['','ride','delivery','quote','teaming','commercial','funding','other']);
-const json=(status,message)=>new Response(JSON.stringify({message}),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}});
+// The public site is served from GitHub Pages at the custom domain; allow it to call this function.
+const ORIGINS=new Set(['https://eautoandtransport.com','https://www.eautoandtransport.com','https://eautoandtransport.netlify.app']);
+let CORS={};
+const json=(status,message)=>new Response(JSON.stringify({message}),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff',...CORS}});
 export const config={path:'/api/request'};
 export default async function handler(request){
+  const origin=request.headers.get('origin')||'';
+  CORS=ORIGINS.has(origin)?{'access-control-allow-origin':origin,'access-control-allow-methods':'POST, OPTIONS','access-control-allow-headers':'content-type','access-control-max-age':'86400',vary:'origin'}:{};
+  if(request.method==='OPTIONS')return new Response(null,{status:204,headers:CORS});
   if(request.method!=='POST')return json(405,'Only POST requests are allowed.');
   if(!(request.headers.get('content-type')||'').toLowerCase().startsWith('application/json'))return json(415,'Please send a JSON request.');
   const contentLength=Number(request.headers.get('content-length')||0);
